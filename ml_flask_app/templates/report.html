@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Model Evaluation Report</title>
+    <style>
+        /* Paper */
+        .thirteen {
+            position: relative;
+            background: #f8f8f8;
+            width: 90%;
+            margin: 1.5em auto;
+            border: 3px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .thirteen h1 {
+            position: relative;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 0px;
+            text-transform: uppercase;
+            width: auto;
+            text-align: center;
+            margin: auto;
+            white-space: nowrap;
+            border: 2px solid #222;
+            padding: 5px 11px 3px 11px;
+        }
+
+        .thirteen h1:before,
+        .thirteen h1:after {
+            background-color: #c50000;
+            position: absolute;
+            content: '';
+            height: 7px;
+
+            width: 7px;
+            border-radius: 50%;
+            bottom: 12px;
+        }
+
+        .thirteen h1:before {
+            left: -20px;
+        }
+
+        .thirteen h1:after {
+            right: -20px;
+        }
+
+
+
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .cards_item {
+            display: flex;
+            padding: 1rem;
+        }
+
+        .card_image {
+            height: calc(13*1.2rem);
+            padding: 1.2rem 1.2rem 0;
+            position: relative;
+            width: 100%;
+            /* Ensures the image takes the full width of the container */
+        }
+
+        .card_image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Use 'cover' to maintain aspect ratio and cover the container */
+            /* object-fit: contain; */
+            /* Uncomment this line if you want the entire image to be visible */
+        }
+
+
+        .card_image:before,
+        .card_image:after {
+            content: "";
+            position: absolute;
+            width: 20px;
+            left: 60%;
+            top: 0;
+            height: 45px;
+            background: #e6e6e6b8;
+            transform: rotate(45deg);
+        }
+
+        .card_image:after {
+            transform: rotate(-45deg);
+            top: auto;
+            bottom: -22px;
+            left: 40%;
+        }
+
+        .card_image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cards_item {
+            filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.25));
+        }
+
+
+        .card {
+            background-color: white;
+            border-radius: 0.25rem;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            padding-left: 30px;
+            background: repeating-linear-gradient(#0000 0 calc(1.2rem - 1px), #66afe1 0 1.2rem) right bottom /100% 100%, linear-gradient(red 0 0) 30px 0/2px 100% #fff;
+            background-repeat: no-repeat;
+            line-height: 1.2rem;
+        }
+
+        .card_content {
+            padding: 1.2rem;
+        }
+
+        h2.card_title,
+        p {
+            margin: 1.2rem 0;
+        }
+
+        h2.card_title {
+            font-size: 1.3em;
+        }
+
+        body {
+            font-family: monospace;
+            background: #eee;
+        }
+
+        html {
+            font-size: 15px;
+        }
+
+        /* Button */
+        .featured-image {
+            margin-left: 42%;
+            max-width: 100px;
+        }
+
+        .round-button {
+            width: 100%;
+        }
+
+        .round-button-circle {
+            width: 100%;
+            height: 0;
+            padding-bottom: 100%;
+            border-radius: 50%;
+            border: 10px solid #cfdcec;
+            overflow: hidden;
+
+            background: #bd464a;
+            box-shadow: 0 0 3px gray;
+        }
+
+        .round-button-circle:hover {
+            background: #30588e;
+        }
+
+        .round-button a {
+            display: block;
+            float: left;
+            width: 100%;
+            padding-top: 50%;
+            padding-bottom: 50%;
+            line-height: 1em;
+            margin-top: -0.5em;
+
+            text-align: center;
+            color: #e2eaf3;
+            font-family: Verdana;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* Loaders */
+        .preloaderBg {
+            position: fixed;
+            z-index: 10;
+            top: 0;
+            background: #fff;
+            width: 100%;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .preloader {
+            margin: auto;
+            background: url(https://habrastorage.org/getpro/habr/comment_images/8cf/deb/d58/8cfdebd58675bc96050d98524f8d051b.png) no-repeat center;
+            background-size: 150px;
+            width: 300px;
+            height: 300px;
+        }
+
+        .preloader2 {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #f00;
+            border-radius: 50%;
+            width: 250px;
+            height: 250px;
+            animation: spin 1s ease-in-out infinite;
+            position: relative;
+            margin: auto;
+            top: -280px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        function preloader() {
+            setTimeout(showPage, 5000);
+        }
+
+        function showPage() {
+            document.getElementById("preloaderBg").style.display = "none";
+        }
+
+        window.onload = preloader;
+    </script>
+</head>
+
+<body>
+    <div id="preloaderBg" class="preloaderBg">
+        <div class="preloader"></div>
+        <div class="preloader2"></div>
+
+
+    </div>
+    <div class="thirteen">
+        <h1>Network Intrusion Detection System Evaluation</h1>
+    </div>
+    <!-- Paper -->
+    <div class="main">
+        <ul class="cards">
+            <li class="cards_item">
+                <div class="card">
+                    <div class="card_image"><img src="{{ url_for('static', filename='./images/DT.png') }}" alt="Decision Tree Algorithm "></div>
+                    <div class="card_content">
+                        <h2 class="card_title">Decision Tree &#x2022; Algorithm</h2>
+                        <div class="card_text">
+                            <p>Normal Count: {{ dt_normal_count }}</p>
+                            <p>Anomaly Count: {{ dt_anomaly_count }}</p>
+                            <p>Normal Percentage: {{ dt_normal_percentage }}%</p>
+                            <p>Anomaly Percentage: {{ dt_anomaly_percentage }}%</p>
+                            <p>Error Percentage: {{ dt_anomaly_detection_percentage }}%</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="cards_item">
+                <div class="card">
+                    <div class="card_image"><img src="{{ url_for('static', filename='./images/KNN.jpg') }}" alt="KNN Algorithm "></div>
+                    <div class="card_content">
+                        <h2 class="card_title">K-Nearest Neighbour&#x2022; Algorithm</h2>
+                        <div class="card_text">
+                            <p>Normal Count: {{ knn_normal_count }}</p>
+                            <p>Anomaly Count: {{ knn_anomaly_count }}</p>
+                            <p>Normal Percentage: {{ knn_normal_percentage }}%</p>
+                            <p>Anomaly Percentage: {{ knn_anomaly_percentage }}%</p>
+                            <p>Error Percentage: {{ knn_anomaly_detection_percentage }}%</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="cards_item">
+                <div class="card">
+                    <div class="card_image"><img src= "{{ url_for('static', filename='./images/LT.webp') }}" alt="Logistic Regression "></div>
+                    <div class="card_content">
+                        <h2 class="card_title">Logistic Regression &#x2022; Algorithm</h2>
+                        <div class="card_text">
+                            <p>Normal Count: {{ lr_normal_count }}</p>
+                            <p>Anomaly Count: {{ lr_anomaly_count }}</p>
+                            <p>Normal Percentage: {{ lr_normal_percentage }}%</p>
+                            <p>Anomaly Percentage: {{ lr_anomaly_percentage }}%</p>
+                            <p>Error Percentage: {{ lr_anomaly_detection_percentage }}%</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <!-- <div class="featured-image">
+            <div class="round-button">
+                <div class="round-button-circle">
+                    <a href="./index.html" class="round-button">Test More</a>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</body>
+
+</html>
