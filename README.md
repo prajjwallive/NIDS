@@ -42,7 +42,7 @@ cd NIDS
 pip install -r requirements.txt
 ```
 
-<p>4. Prepare the dataset</p>
+<p>4. Prepare the datasets</p>
 
 ```
 Ensure Train_data.csv and Test_data.csv are present in the project directory.
